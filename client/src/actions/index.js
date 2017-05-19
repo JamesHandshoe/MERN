@@ -12,6 +12,7 @@ import {
  } from './types';
 
 import authReducer from '../reducers/auth_reducer';
+import postReducer from '../reducers/reducer-posts';
 
 
 //const ROOT_URL = 'http://rest.learncode.academy/api/paul';
@@ -85,7 +86,7 @@ export function createPost(props) {
 export function updatePost(props, id) {
   return function(dispatch) {
     axios.put(`${ROOT_URL}/items/${id}`, { props }, config)
-      .then( (request) => {
+      .then(request => {
         dispatch({
           type: UPDATE_POST,
           payload: request
@@ -99,8 +100,7 @@ export function fetchPosts() {
   setHeader();
   return function(dispatch) {
     axios.get(`${ROOT_URL}/items`, config)
-      .then( (response) => {
-        console.log("Response", response)
+      .then(response => {
         dispatch({
           type: FETCH_POSTS,
           payload: response
@@ -113,8 +113,8 @@ export function fetchPost(id) {
   setHeader();
   return function(dispatch) {
     axios.get(`${ROOT_URL}/items/${id}`, config)
-      .then( (response) => {
-        console.log("Response", response)
+      .then(response => {
+        console.log("Response", response);
         dispatch({
           type: FETCH_POST,
           payload: response
@@ -127,7 +127,7 @@ export function deletePost(id) {
   setHeader();
   return function(dispatch) {
     axios.delete(`${ROOT_URL}/items/${id}`, config)
-      .then( (response) => {
+      .then(response => {
         dispatch({
           type: DELETE_POST,
           payload: response

@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { initialize, reduxForm } from 'redux-form';
-import { updatePost } from '../../actions/index';
+import { reduxForm } from 'redux-form';
+import { fetchPost, updatePost } from '../../actions/index';
 import { Link } from 'react-router';
 import axios from 'axios';
-
-const { DOM: { input, select, textarea } } = React;
 
 const ROOT_URL = 'http://localhost:3000';
 
@@ -14,27 +12,38 @@ const config = {
 
 class UpdateList extends Component {
 	
-	constructor(props) {
-		super(props);
+	// constructor(props) {
+	// 	super(props);
 
-		this.state = {
-			post : {}
-		}
-	}
+	// 	this.state = {
+	// 		post : {}
+	// 	}
+	// }
 
 	componentWillMount() {
 		//todo - add the axios call here
-		//this.props.fetchPost(this.props.params.id);
-		axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
-	      .then( (response) => {
-	        console.log("Response", response)
-	      	this.setState({
-	      		post: response.data
-	      	})
-
-	      });
-
+		this.props.fetchPost(this.props.params.id);
+		// axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
+	 //      .then( (response) => {
+	 //        console.log("Response", response)
+	 //      	this.setState({
+	 //      		post: response.data
+	 //      	})
+	 //      });
 	}
+
+	componentDidMount() {
+		console.log(this.props);
+		//todo - add the axios call here
+		this.props.fetchPost(this.props.params.id);
+		// axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
+	 //      .then( (response) => {
+	 //        console.log("Response", response)
+	 //      	this.setState({
+	 //      		post: response.data
+	 //      	})
+	 //      });
+	}	
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps == undefined) {
@@ -64,19 +73,19 @@ class UpdateList extends Component {
 				
 				<fieldset className="form-group">
 					<label>Title</label>
-					<input type="text" className="form-control" {...title} value={this.state.post.title}  />
+					<input type="text" className="form-control" {...title} value={this.props.title} />
 				</fieldset>
 				<fieldset className="form-group">
 					<label>Category</label>
-					<input type="text" className="form-control" {...topic} value={this.state.post.topic} />
+					<input type="text" className="form-control" {...topic} />
 				</fieldset>
 				<fieldset className="form-group">
 					<label>URL</label>
-					<input type="text" className="form-control" {...url} value={this.state.post.url} />
+					<input type="text" className="form-control" {...url} />
 				</fieldset>
 				<fieldset className="form-group">
 					<label>Content</label>
-					<textarea type="text" rows="8" className="form-control text" {...content} value={this.state.post.content} />
+					<textarea type="text" rows="8" className="form-control text" {...content} />
 				</fieldset>
 
 				<button type="submit" className="btn btn-primary">Save</button>
@@ -87,9 +96,25 @@ class UpdateList extends Component {
 	}
 }
 
+UpdateList.propTypes = {
+	fields: PropTypes.object.isRequired,
+	handleSubmit: PropTypes.func.isRequired,
+	fetchPost: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+	console.log("State", state);
+	return { initialValue: state.posts.post };
+}
+
+const fields = ['title', 'topic', 'url', 'content']
 
 export default reduxForm({
 	form: 'UpdateNewForm',
-	fields: ['title', 'topic', 'url', 'content']
-}, null, { updatePost })(UpdateList);
+	fields: fields
+}, 
+
+mapStateToProps,
+
+{ fetchPost, updatePost })(UpdateList);
 

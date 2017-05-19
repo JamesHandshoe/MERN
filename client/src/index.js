@@ -14,15 +14,15 @@ import ListItem from './components/list/new-list-item';
 import ListsShow from './components/list/list-items';
 import ListShow from './components/list/list-show';
 import UpdateList from './components/list/update-list-item.js'
-import promise from 'redux-promise';
-import reducers from './reducers';
+import reducers from './reducers/index.js';
 
-const createStoreWithMiddleware = applyMiddleware(promise, reduxThunk)(createStore);
-
-const store = createStoreWithMiddleware(reducers);
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={createStoreWithMiddleware(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )}>
 		<Router history={browserHistory}>
   			<Route path="/" component={App}>
             <Route path="items" component={RequireAuth(ListsShow)}>

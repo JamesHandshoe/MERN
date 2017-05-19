@@ -11,24 +11,24 @@ const config = {
 }
 
 class ListShow extends Component {
-	constructor(props) {
-		super(props);
+	// constructor(props) {
+	// 	super(props);
 
-		this.state = {
-			post : {}
-		}
-	}
+	// 	this.state = {
+	// 		post : {}
+	// 	}
+	// }
 
 	componentWillMount() {
 		//todo - add the axios call here
-		//this.props.fetchPost(this.props.params.id);
-		axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
-	      .then( (response) => {
-	        console.log("Response", response)
-	      	this.setState({
-	      		post: response.data
-	      	})
-	      });
+		this.props.fetchPost(this.props.params.id);
+		// axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
+	 //      .then( (response) => {
+	 //        console.log("Response", response)
+	 //      	this.setState({
+	 //      		post: response.data
+	 //      	})
+	 //      });
 	}
 
 	onDeleteClick() {
@@ -41,7 +41,7 @@ class ListShow extends Component {
 	}
 
 	render() {
-		const post = this.state.post;
+		const post = this.props.posts.post;
 				if (!post) {
 			return (
 				<div>
@@ -73,6 +73,7 @@ class ListShow extends Component {
 }
 
 function mapStateToProps(state) {
+	console.log("State", state);
 	return { post: state.posts.post };
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions/index';
+import * as actions from '../../actions/index';
 import { Link } from 'react-router';
 import axios from 'axios';
 
@@ -12,33 +12,35 @@ const config = {
 
 class ListItems extends Component {
 
-	constructor(props) {
-		super(props);
+	// constructor(props) {
+	// 	super(props);
 
-		this.state = {
-			posts : []
-		}
-	}
+	// 	this.state = {
+	// 		posts : []
+	// 	}
+	// }
 
 	componentWillMount() {
 
-		axios.get(`${ROOT_URL}/items`, config)
-	      .then((response) => {
-	      	const posts = response.data;
-	        console.log("Response", response)
-	        this.setState({
-	        	posts: [ ...posts ]
-	        })
-	        // dispatch({
-	        //   type: FETCH_POSTS,
-	        //   payload: response
-	        // });
-		})
+		this.props.fetchPosts();
+
+		// axios.get(`${ROOT_URL}/items`, config)
+	 //      .then((response) => {
+	 //      	const posts = response.data;
+	 //        console.log("Response", response)
+	 //        this.setState({
+	 //        	posts: [ ...posts ]
+	 //        })
+	 //        // dispatch({
+	 //        //   type: FETCH_POSTS,
+	 //        //   payload: response
+	 //        // });
+		// })
 	}
 
 
 	renderItems() {
-		return this.state.posts.map((post) => {
+		return this.props.posts.map((post) => {
 
 			return (
 				<li className="list-group-item" key={post._id}>
@@ -78,8 +80,9 @@ class ListItems extends Component {
 }
 
 function mapStateToProps(state) {
+	console.log("State", state)
 	return { posts: state.posts.all };
 
 }
 
-export default connect(mapStateToProps, { fetchPosts: fetchPosts })(ListItems);
+export default connect(mapStateToProps, actions)(ListItems);
