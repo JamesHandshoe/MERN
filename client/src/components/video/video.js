@@ -10,7 +10,7 @@ const API_KEY = 'AIzaSyBh7FOaYJE9S-Xwas4YF2HQL9fBRa4NO_c';
 class Video extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { 
+		this.state = {
 			videos: [],
 			selectedVideo: null
 		};
@@ -20,8 +20,7 @@ class Video extends Component {
 
 	videoSearch(term) {
 		YTSearch({key: API_KEY, term: term}, (videos) => {
-			console.log(videos);
-			this.setState({ 
+			this.setState({
 				videos: videos,
 				selectedVideo: videos[0]
 			}); // this.setState({videos})same as this.setState({videos: videos})
@@ -42,7 +41,7 @@ class Video extends Component {
 
 export default Video;
 // <VideoList videos={this.state.videos} /> is called passing a prop
-// the prop becomes a parameter in video-list.js and then we have access to the data 
+// the prop becomes a parameter in video-list.js and then we have access to the data
 // called from the youtube API query
 // 2.  Take this component's generated HTML and put it in the DOM
 

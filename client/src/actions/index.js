@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { 
+import {
   AUTH_USER,
   UNAUTH_USER,
   AUTH_ERROR,
-  CREATE_POSTS,
+  CREATE_POST,
   FETCH_POSTS,
   FETCH_POST,
   DELETE_POST,
@@ -24,12 +24,10 @@ function setHeader() {
   config = { headers: { authorization: localStorage.getItem('token') } };
 }
 
-
 export function signinUser({ email, password }){
 	return function(dispatch){
 		axios.post(`${ROOT_URL}/signin`, {email, password})
  			.then(response => {
- 		
  				dispatch({ type: AUTH_USER });
  				localStorage.setItem('token', response.data.token);
  				browserHistory.push('/newitem');
@@ -40,7 +38,7 @@ export function signinUser({ email, password }){
 }
 
 export function signoutUser(){
-   localStorage.removeItem('token'); 
+   localStorage.removeItem('token');
    return {type: UNAUTH_USER};
 }
 
@@ -50,7 +48,6 @@ export function signupUser({ email, password }) {
     axios.post(`${ROOT_URL}/signup`, { email, password })
       .then(response => {
         dispatch({type: AUTH_USER});
-          
           //update the token
           localStorage.setItem('token', response.data.token);
           setHeader();
@@ -71,12 +68,11 @@ export function authError(error) {
 export function createPost(props) {
   setHeader();
   return function(dispatch) {
-
     axios.post(`${ROOT_URL}/newitem`, { props }, config )
-    .then(request => {
+    .then(response => {
         dispatch({
-          type: CREATE_POSTS,
-          payload: request
+          type: CREATE_POST,
+          payload: response
         });
       browserHistory.push('/items');
     });
@@ -86,10 +82,10 @@ export function createPost(props) {
 export function updatePost(props, id) {
   return function(dispatch) {
     axios.put(`${ROOT_URL}/items/${id}`, { props }, config)
-      .then(request => {
+      .then(response => {
         dispatch({
           type: UPDATE_POST,
-          payload: request
+          payload: response
         });
         browserHistory.push('/items');
       });
@@ -114,7 +110,6 @@ export function fetchPost(id) {
   return function(dispatch) {
     axios.get(`${ROOT_URL}/items/${id}`, config)
       .then(response => {
-        console.log("Response", response);
         dispatch({
           type: FETCH_POST,
           payload: response

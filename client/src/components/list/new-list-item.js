@@ -4,7 +4,6 @@ import { createPost } from '../../actions/index';
 import { Link } from 'react-router';
 
 class ListItem extends Component {
-	
 
 	handleFormSubmit(formProps){
 	  //call action creator to sign up the user
@@ -16,7 +15,7 @@ class ListItem extends Component {
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				<h3>Create a New Post</h3>
-				
+
 				<fieldset className="form-group">
 					<label>Title</label>
 					<input type="text" className="form-control" {...title} />
@@ -42,9 +41,11 @@ class ListItem extends Component {
 	}
 }
 
+function mapStateToProps(state) {
+	return { post: state.posts.post };
+}
 
 export default reduxForm({
 	form: 'ListsNewForm',
 	fields: ['title', 'topic', 'url', 'content']
-}, null, { createPost })(ListItem);
-
+}, mapStateToProps, { createPost })(ListItem);

@@ -11,57 +11,16 @@ const config = {
 }
 
 class UpdateList extends Component {
-	
-	// constructor(props) {
-	// 	super(props);
-
-	// 	this.state = {
-	// 		post : {}
-	// 	}
-	// }
 
 	componentWillMount() {
-		//todo - add the axios call here
 		this.props.fetchPost(this.props.params.id);
-		// axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
-	 //      .then( (response) => {
-	 //        console.log("Response", response)
-	 //      	this.setState({
-	 //      		post: response.data
-	 //      	})
-	 //      });
 	}
 
 	componentDidMount() {
-		console.log(this.props);
-		//todo - add the axios call here
 		this.props.fetchPost(this.props.params.id);
-		// axios.get(ROOT_URL + '/items/' + this.props.params.id, config)
-	 //      .then( (response) => {
-	 //        console.log("Response", response)
-	 //      	this.setState({
-	 //      		post: response.data
-	 //      	})
-	 //      });
-	}	
-
-	componentWillReceiveProps(nextProps) {
-		if (nextProps == undefined) {
-			e.preventDefault();
-		} else {
-			this.setState({ 
-				post: [...nextProps]
-		 	});
-		}
-
 	}
 
-	// handleChange(event) {
-	// 	this.setState({title: event.target.value})
-	// }
-
 	handleFormSubmit(formProps){
-		//TODO - make this an update Post 
 	    this.props.updatePost(formProps, this.props.params.id);
 	}
 
@@ -70,10 +29,10 @@ class UpdateList extends Component {
 		return (
 			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				<h3>Update Post</h3>
-				
+
 				<fieldset className="form-group">
 					<label>Title</label>
-					<input type="text" className="form-control" {...title} value={this.props.title} />
+					<input type="text" className="form-control" {...title} /*value={this.props.title}*/ />
 				</fieldset>
 				<fieldset className="form-group">
 					<label>Category</label>
@@ -103,8 +62,7 @@ UpdateList.propTypes = {
 }
 
 function mapStateToProps(state) {
-	console.log("State", state);
-	return { initialValue: state.posts.post };
+	return { initialValues: state.posts.post };
 }
 
 const fields = ['title', 'topic', 'url', 'content']
@@ -112,9 +70,8 @@ const fields = ['title', 'topic', 'url', 'content']
 export default reduxForm({
 	form: 'UpdateNewForm',
 	fields: fields
-}, 
+},
 
 mapStateToProps,
 
 { fetchPost, updatePost })(UpdateList);
-

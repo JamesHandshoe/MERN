@@ -12,30 +12,10 @@ const config = {
 
 class ListItems extends Component {
 
-	// constructor(props) {
-	// 	super(props);
-
-	// 	this.state = {
-	// 		posts : []
-	// 	}
-	// }
-
 	componentWillMount() {
 
 		this.props.fetchPosts();
 
-		// axios.get(`${ROOT_URL}/items`, config)
-	 //      .then((response) => {
-	 //      	const posts = response.data;
-	 //        console.log("Response", response)
-	 //        this.setState({
-	 //        	posts: [ ...posts ]
-	 //        })
-	 //        // dispatch({
-	 //        //   type: FETCH_POSTS,
-	 //        //   payload: response
-	 //        // });
-		// })
 	}
 
 
@@ -80,7 +60,6 @@ class ListItems extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log("State", state)
 	return { posts: state.posts.all };
 
 }
