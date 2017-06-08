@@ -20,10 +20,6 @@ class ListShow extends Component {
 		this.props.deletePost(this.props.params.id);
 	}
 
-	getPath() {
-		return '/updateitems/' + path;
-	}
-
 	render() {
 		const post = this.props.post;
 				if (!post) {
@@ -37,7 +33,6 @@ class ListShow extends Component {
 
 		return (
 			<div>
-
 				<h3>{post.title}</h3>
 				<div id="space"></div>
 				<h6>Topic: {post.topic}</h6>

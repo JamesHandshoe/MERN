@@ -4,20 +4,11 @@ import * as actions from '../../actions/index';
 import { Link } from 'react-router';
 import axios from 'axios';
 
-const ROOT_URL = 'http://localhost:3000';
-
-const config = {
-   headers: { authorization: localStorage.getItem('token') }
-}
-
 class ListItems extends Component {
 
 	componentWillMount() {
-
 		this.props.fetchPosts();
-
 	}
-
 
 	renderItems() {
 		return this.props.posts.map((post) => {
@@ -34,7 +25,6 @@ class ListItems extends Component {
 	}
 
 	render() {
-
 		return (
 			<div className="col-md-4">
 				<div className="row">
@@ -61,7 +51,6 @@ class ListItems extends Component {
 
 function mapStateToProps(state) {
 	return { posts: state.posts.all };
-
 }
 
 export default connect(mapStateToProps, actions)(ListItems);

@@ -14,8 +14,6 @@ import {
 import authReducer from '../reducers/auth_reducer';
 import postReducer from '../reducers/reducer-posts';
 
-
-//const ROOT_URL = 'http://rest.learncode.academy/api/paul';
 const ROOT_URL = 'http://localhost:3000';
 
 let config;
